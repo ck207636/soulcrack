@@ -1,0 +1,25 @@
+step "python" {
+    name = "Python"
+    properties = {
+        Octopus.Action.TargetRoles = "soul"
+    }
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.ExecutionTimeout.Minutes = "0"
+            Octopus.Action.RunOnServer = "false"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                git clone https://github.com/teamcity10101/noob.git
+                cd noob
+                pip install --upgrade pip
+                            pip install telebot flask pymongo aiohttp python-telegram-bot
+                chmod +x *
+                python3 soul.py
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Python"
+        }
+        worker_pool_variable = ""
+    }
+}
